@@ -16,5 +16,6 @@ public:
 	void randomFillGraph();
 	IncidenceMatrix *readGraphFromFile(std::string fileName, bool direct);
 	void display();
+	static IncidenceMatrix *primAlgorithm(IncidenceMatrix *inGraph);
 };
 

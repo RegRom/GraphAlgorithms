@@ -1,5 +1,6 @@
 #pragma once
 #include "Edge.h"
+#include "EdgeCompare.h"
 
 class NeighboursList
 {
@@ -14,5 +15,10 @@ public:
 	NeighboursList(int _size, bool _directed, int edges);
 	~NeighboursList();
 	void addEdge(int begin, int end, int weight);
+	void fillGraph();
+	void randomFillGraph();
+	NeighboursList *readGraphFromFile(std::string fileName, bool direct);
+	void display();
+	static NeighboursList *primAlgorithm(NeighboursList *inGraph);
 };
 

@@ -6,9 +6,10 @@ Edge::Edge()
 {
 }
 
-Edge::Edge(int _vertex, int _weight)
+Edge::Edge(int _beginVertex, int _endVertex, int _weight)
 {
-	this->vertex = _vertex;
+	this->beginVertex = _beginVertex;
+	this->endVertex = _endVertex;
 	this->weight = _weight;
 }
 

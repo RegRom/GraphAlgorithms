@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Edge.h" />
+    <ClInclude Include="EdgeCompare.h" />
     <ClInclude Include="IncidenceMatrix.h" />
     <ClInclude Include="NeighboursList.h" />
     <ClInclude Include="stdafx.h" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Edge.cpp" />
+    <ClCompile Include="EdgeCompare.cpp" />
     <ClCompile Include="GraphAlgorithms.cpp" />
     <ClCompile Include="IncidenceMatrix.cpp" />
     <ClCompile Include="NeighboursList.cpp" />

@@ -2,10 +2,10 @@
 class Edge
 {
 public:
-	int vertex, weight;
+	int beginVertex, endVertex, weight;
 
 	Edge();
-	Edge(int _vertex, int _weight);
+	Edge(int _beginVertex, int _endVertex, int _weight);
 	~Edge();
 };
 

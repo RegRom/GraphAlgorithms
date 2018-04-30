@@ -155,3 +155,8 @@ void IncidenceMatrix::display()
 		std::cout << "\n";
 	}
 }
+
+IncidenceMatrix * IncidenceMatrix::primAlgorithm(IncidenceMatrix * inGraph)
+{
+	return nullptr;
+}
