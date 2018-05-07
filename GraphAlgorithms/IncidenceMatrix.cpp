@@ -103,7 +103,7 @@ void IncidenceMatrix::randomFillGraph()
 		prev = next;
 		visited.push_back(prev);
 	}
-	for (int i = (size - 1); i < edgeNum; i++)
+	for (int i = (size - 2); i < edgeNum; i++)
 	{
 		prev = rand() % (size - 1);
 		next = rand() % (size - 1);
@@ -156,7 +156,58 @@ void IncidenceMatrix::display()
 	}
 }
 
-IncidenceMatrix * IncidenceMatrix::primAlgorithm(IncidenceMatrix * inGraph)
+NeighboursList * IncidenceMatrix::primAlgorithm(IncidenceMatrix * inGraph)
 {
-	return nullptr;
+	std::shared_ptr<Edge> edge;
+	std::vector<bool> visited(inGraph->size-1);
+	for (int i = 0; i < visited.size(); i++) visited[i] = false;
+
+	std::priority_queue<std::shared_ptr<Edge>, std::vector<std::shared_ptr<Edge> >, EdgeCompare > queue;
+	NeighboursList *spanningTree = new NeighboursList((inGraph->size-1), false, (inGraph->size - 2));
+	int v, k, inSize = inGraph->size;
+	std::vector<std::shared_ptr<Edge> > tmp;
+
+	for (int i = 0; i < inGraph->edgeNum; i++)
+	{
+		k = 0;
+		std::vector<int> tmpEdge(3);
+		for (int j = 0; j < inSize - 1; j++)
+		{
+
+			if (inGraph->graph[j][i] == 0) continue;
+			else
+			{
+				tmpEdge[k] = j;
+				k++;
+			}
+		}
+		tmpEdge[2] = inGraph->graph[inSize - 1][i];
+		std::shared_ptr<Edge> e(new Edge(tmpEdge[0], tmpEdge[1], tmpEdge[2]));
+		std::shared_ptr<Edge> re(new Edge(tmpEdge[1], tmpEdge[0], tmpEdge[2]));
+		tmp.push_back(e);
+		tmp.push_back(re);
+		
+	}
+	v = 0;
+	visited[0] = true;
+
+	for (int j = 0; j < spanningTree->size - 1; j++)
+	{
+		for (int l = 0; l < tmp.size(); l++)
+		{
+			if ((tmp[l]->beginVertex == v) && !visited[tmp[l]->endVertex])
+				queue.push(tmp[l]);
+		}
+		do
+		{
+			edge = queue.top();
+			queue.pop();
+		} while (visited[edge->endVertex]);
+
+		spanningTree->graph[edge->beginVertex].push_front(edge);
+		visited[edge->endVertex] = true;
+		v = edge->endVertex;
+	}
+
+	return spanningTree;
 }

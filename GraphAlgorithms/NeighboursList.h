@@ -4,6 +4,7 @@
 
 class NeighboursList
 {
+	friend class IncidenceMatrix;
 private:
 	std::vector< std::list< std::shared_ptr<Edge> > > graph;
 	int size, edgeNum;

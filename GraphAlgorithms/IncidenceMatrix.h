@@ -1,4 +1,8 @@
 #pragma once
+#include "Edge.h"
+#include "EdgeCompare.h"
+#include "NeighboursList.h"
+
 class IncidenceMatrix
 {
 private:
@@ -16,6 +20,6 @@ public:
 	void randomFillGraph();
 	IncidenceMatrix *readGraphFromFile(std::string fileName, bool direct);
 	void display();
-	static IncidenceMatrix *primAlgorithm(IncidenceMatrix *inGraph);
+	static NeighboursList *primAlgorithm(IncidenceMatrix *inGraph);
 };
 
