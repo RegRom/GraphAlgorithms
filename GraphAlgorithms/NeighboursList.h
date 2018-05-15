@@ -21,5 +21,6 @@ public:
 	NeighboursList *readGraphFromFile(std::string fileName, bool direct);
 	void display();
 	static NeighboursList *primAlgorithm(NeighboursList *inGraph);
+	static void dijkstraAlgorithm(NeighboursList *inGraph, int begin, int end);
 };
 

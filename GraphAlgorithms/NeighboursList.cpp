@@ -180,3 +180,44 @@ NeighboursList * NeighboursList::primAlgorithm(NeighboursList * inGraph)
 
 	return spanningTree;
 }
+
+void NeighboursList::dijkstraAlgorithm(NeighboursList * inGraph, int begin, int end)
+{
+	const int MAXINT = 2147483647;
+	int v = begin;
+	std::priority_queue<std::shared_ptr<Edge>, std::vector<std::shared_ptr<Edge> >, EdgeCompare> queue;
+	std::shared_ptr<Edge> edge;
+	std::vector<int> d(inGraph->size), p(inGraph->size);
+	std::vector<bool> visited(inGraph->size);
+	for (int i = 0; i < visited.size(); i++)
+	{
+		visited[i] = false;
+		p[i] = -1;
+		d[i] = MAXINT;
+	}
+	d[begin] = 0;
+	//visited[begin] = true;
+
+	while (v != end)
+	{
+		if (visited[v]) continue;
+		for (std::shared_ptr<Edge> e : inGraph->graph[v])
+		{
+			//if (!visited[e->endVertex])
+				queue.push(e);
+		}
+
+		while (!queue.empty())
+		{
+			edge = queue.top();
+			queue.pop();
+			if ((d[edge->endVertex] > d[v] + edge->weight) && !visited[edge->endVertex])
+			{
+				d[edge->endVertex] = d[v] + edge->weight;
+				p[edge->endVertex] = v;
+			}
+		}
+	}
+
+
+}
