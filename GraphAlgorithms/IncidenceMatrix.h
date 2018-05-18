@@ -18,7 +18,7 @@ public:
 	void addEdge(int begin, int end, int i, int weight);
 	void fillGraph();
 	void randomFillGraph();
-	IncidenceMatrix *readGraphFromFile(std::string fileName, bool direct);
+	static IncidenceMatrix *readGraphFromFile(std::string fileName, bool direct);
 	void display();
 	static NeighboursList *primAlgorithm(IncidenceMatrix *inGraph);
 };

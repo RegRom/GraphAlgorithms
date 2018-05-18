@@ -121,18 +121,23 @@ NeighboursList * NeighboursList::readGraphFromFile(std::string fileName, bool di
 		std::istringstream iss(line);
 		iss >> siz; iss >> edges;
 
-		NeighboursList *list = new NeighboursList(size, direct, edges);
+		NeighboursList *list = new NeighboursList(siz, direct, edges);
 
 		std::istringstream iss2;
 		while (getline(file, line))
 		{
-			iss2.str(line);
+			std::istringstream iss2(line);
 			iss2 >> v1; iss2 >> v2; iss2 >> weight;
 			list->addEdge(v1, v2, weight);
 		}
 		return list;
 	}
-	else return nullptr;
+	else
+	{
+		std::cout << "\nFile is corrupted!\n";
+		getchar();
+		return nullptr;
+	}
 }
 
 void NeighboursList::display()
@@ -184,40 +189,56 @@ NeighboursList * NeighboursList::primAlgorithm(NeighboursList * inGraph)
 void NeighboursList::dijkstraAlgorithm(NeighboursList * inGraph, int begin, int end)
 {
 	const int MAXINT = 2147483647;
-	int v = begin;
-	std::priority_queue<std::shared_ptr<Edge>, std::vector<std::shared_ptr<Edge> >, EdgeCompare> queue;
-	std::shared_ptr<Edge> edge;
+	int v;
 	std::vector<int> d(inGraph->size), p(inGraph->size);
-	std::vector<bool> visited(inGraph->size);
-	for (int i = 0; i < visited.size(); i++)
+	std::list<int> path;
+
+	for (int i = 0; i < d.size(); i++)
 	{
-		visited[i] = false;
 		p[i] = -1;
 		d[i] = MAXINT;
 	}
+
+	std::set< std::pair<int, int> > vertices;
+
+	vertices.insert(std::make_pair(0, begin));
 	d[begin] = 0;
-	//visited[begin] = true;
 
-	while (v != end)
+	while (!vertices.empty())
 	{
-		if (visited[v]) continue;
-		for (std::shared_ptr<Edge> e : inGraph->graph[v])
-		{
-			//if (!visited[e->endVertex])
-				queue.push(e);
-		}
+		std::pair<int, int> tmp = *(vertices.begin());
+		vertices.erase(vertices.begin());
 
-		while (!queue.empty())
+		int vertex = tmp.second;
+		if (vertex == end) break;
+
+		for (std::shared_ptr<Edge> e : inGraph->graph[vertex])
 		{
-			edge = queue.top();
-			queue.pop();
-			if ((d[edge->endVertex] > d[v] + edge->weight) && !visited[edge->endVertex])
+			int neigh = e->endVertex;
+			int weight = e->weight;
+
+			if (d[neigh] > d[vertex] + weight)
 			{
-				d[edge->endVertex] = d[v] + edge->weight;
-				p[edge->endVertex] = v;
+				if (d[neigh] != MAXINT)
+					vertices.erase(vertices.find(std::make_pair(d[neigh], neigh)));
+
+				d[neigh] = d[vertex] + weight;
+				vertices.insert(std::make_pair(d[neigh], neigh));
+				p[neigh] = vertex;
 			}
+
 		}
 	}
-
+	v = end;
+	path.push_front(end);
+	while (v != begin)
+	{
+		path.push_front(p[v]);
+		v = p[v];
+	}
+	for (int e : path)
+	{
+		std::cout << e << " ";
+	}
 
 }

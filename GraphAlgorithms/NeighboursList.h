@@ -18,7 +18,7 @@ public:
 	void addEdge(int begin, int end, int weight);
 	void fillGraph();
 	void randomFillGraph();
-	NeighboursList *readGraphFromFile(std::string fileName, bool direct);
+	static NeighboursList *readGraphFromFile(std::string fileName, bool direct);
 	void display();
 	static NeighboursList *primAlgorithm(NeighboursList *inGraph);
 	static void dijkstraAlgorithm(NeighboursList *inGraph, int begin, int end);

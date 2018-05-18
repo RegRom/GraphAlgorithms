@@ -129,12 +129,12 @@ IncidenceMatrix * IncidenceMatrix::readGraphFromFile(std::string fileName, bool 
 		std::istringstream iss(line);
 		iss >> siz; iss >> edges;
 
-		IncidenceMatrix *matrix = new IncidenceMatrix(size, direct, edges);
+		IncidenceMatrix *matrix = new IncidenceMatrix(siz, direct, edges);
 
 		std::istringstream iss2;
 		while (getline(file, line))
 		{
-			iss2.str(line);
+			std::istringstream iss2(line);
 			iss2 >> v1; iss2 >> v2; iss2 >> weight;
 			matrix->addEdge(v1, v2, i, weight);
 			i++;
