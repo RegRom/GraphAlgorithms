@@ -146,14 +146,19 @@ IncidenceMatrix * IncidenceMatrix::readGraphFromFile(std::string fileName, bool 
 
 void IncidenceMatrix::display()
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size-1; i++)
 	{
 		for (int j = 0; j < edgeNum; j++)
 		{
-			std::cout << graph[i][j] << " ";
+			if (graph[i][j] == -1)
+				std::cout << graph[i][j] << "  ";
+			else
+				std::cout << graph[i][j] << "   ";
 		}
 		std::cout << "\n";
 	}
+	for(int i = 0; i < edgeNum; i++)
+			std::cout << graph[size-1][i] << "  ";
 }
 
 NeighboursList * IncidenceMatrix::primAlgorithm(IncidenceMatrix * inGraph)
@@ -210,4 +215,97 @@ NeighboursList * IncidenceMatrix::primAlgorithm(IncidenceMatrix * inGraph)
 	}
 
 	return spanningTree;
+}
+
+void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, int end)
+{
+	const int MAXINT = 2147483647;
+	int v, k, l = 0, inSize = inGraph->size-1;
+	std::vector<int> d(inSize), p(inSize), edgeCount(inSize);
+	std::list<int> path;
+	std::vector<std::shared_ptr<Edge> > tmpVec;
+
+	for (int i = 0; i < d.size(); i++)
+	{
+		p[i] = -1;
+		d[i] = MAXINT;
+		edgeCount[i] = 0;
+	}
+
+	for (int i = 0; i < inGraph->edgeNum; i++)
+	{
+		k = 0;
+		std::vector<int> tmpEdge(3);
+		for (int j = 0; j < inSize - 1; j++)
+		{
+
+			if (inGraph->graph[j][i] == 0) continue;
+			else if(inGraph->graph[j][i] == 1)
+			{
+				tmpEdge[0] = j;
+			}
+			else if (inGraph->graph[j][i] == -1)
+			{
+				tmpEdge[1] = j;
+			}
+		}
+		edgeCount[tmpEdge[0]]++;
+		tmpEdge[2] = inGraph->graph[inSize][i];
+		std::shared_ptr<Edge> e(new Edge(tmpEdge[0], tmpEdge[1], tmpEdge[2]));
+		tmpVec.push_back(e);
+	}
+
+	std::set< std::pair<int, int> > vertices;
+
+	vertices.insert(std::make_pair(0, begin));
+	d[begin] = 0;
+
+	while (!vertices.empty())
+	{
+		std::pair<int, int> tmp = *(vertices.begin());
+		vertices.erase(vertices.begin());
+		l = 0;
+		int vertex = tmp.second;
+		//if (vertex == end) break;
+		//if (edgeCount[vertex] == 0) continue;
+		//{
+			std::shared_ptr<Edge> e;
+			for (l = 0; l < tmpVec.size(); l++)
+			{
+				if (tmpVec[l]->beginVertex != vertex) continue;
+				else
+				{
+					e = tmpVec[l];
+					//tmpVec.erase(tmpVec.begin + l - 1);
+					edgeCount[vertex]--;
+
+					int neigh = e->endVertex;
+					int weight = e->weight;
+
+					if (d[neigh] > d[vertex] + weight)
+					{
+						if (d[neigh] != MAXINT)
+							vertices.erase(vertices.find(std::make_pair(d[neigh], neigh)));
+
+						d[neigh] = d[vertex] + weight;
+						vertices.insert(std::make_pair(d[neigh], neigh));
+						p[neigh] = vertex;
+					}
+				}
+			}
+		//}
+
+	
+	}
+	v = end;
+	path.push_front(end);
+	while (v != begin)
+	{
+		path.push_front(p[v]);
+		v = p[v];
+	}
+	for (int e : path)
+	{
+		std::cout << e << " ";
+	}
 }

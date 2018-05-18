@@ -21,5 +21,6 @@ public:
 	static IncidenceMatrix *readGraphFromFile(std::string fileName, bool direct);
 	void display();
 	static NeighboursList *primAlgorithm(IncidenceMatrix *inGraph);
+	static void dijkstraAlgorithm(IncidenceMatrix *inGraph, int begin, int end);
 };
 
