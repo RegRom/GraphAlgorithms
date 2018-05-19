@@ -242,3 +242,8 @@ void NeighboursList::dijkstraAlgorithm(NeighboursList * inGraph, int begin, int 
 	}
 
 }
+
+int NeighboursList::getSize()
+{
+	return this->size;
+}

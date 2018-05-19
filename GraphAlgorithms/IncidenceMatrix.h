@@ -22,5 +22,6 @@ public:
 	void display();
 	static NeighboursList *primAlgorithm(IncidenceMatrix *inGraph);
 	static void dijkstraAlgorithm(IncidenceMatrix *inGraph, int begin, int end);
+	int getSize();
 };
 

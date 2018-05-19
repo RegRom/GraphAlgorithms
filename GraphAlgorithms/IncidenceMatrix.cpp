@@ -309,3 +309,8 @@ void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, in
 		std::cout << e << " ";
 	}
 }
+
+int IncidenceMatrix::getSize()
+{
+	return this->size;
+}
