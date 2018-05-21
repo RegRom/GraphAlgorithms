@@ -236,7 +236,7 @@ void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, in
 	{
 		k = 0;
 		std::vector<int> tmpEdge(3);
-		for (int j = 0; j < inSize - 1; j++)
+		for (int j = 0; j < inSize; j++)
 		{
 
 			if (inGraph->graph[j][i] == 0) continue;

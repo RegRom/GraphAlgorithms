@@ -8,6 +8,8 @@ MainMenu::MainMenu()
 	setGreetingMessage();
 	setPrimMenu();
 	setDijkstraMenu();
+	list = nullptr;
+	matrix = nullptr;
 }
 
 
@@ -144,14 +146,30 @@ void MainMenu::primExperiments(char option)
 	break;
 	case '5':
 	{
-		list->display();
-		getchar();
+		if (list == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			list->display();
+			getchar();
+		}
 	}
 	break;
 	case '6':
 	{
-		matrix->display();
-		getchar();
+		if (matrix == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			matrix->display();
+			getchar();
+		}
 	}
 	break;
 	case '7':
@@ -218,36 +236,68 @@ void MainMenu::dijkstraExperiments(char option)
 	break;
 	case '5':
 	{
-		list->display();
-		getchar();
+		if (list == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			list->display();
+			getchar();
+		}
 	}
 	break;
 	case '6':
 	{
-		matrix->display();
-		getchar();
+		if (matrix == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			matrix->display();
+			getchar();
+		}
 	}
 	break;
 	case '7':
 	{
-		std::cout << "Input begin vertex: ";
-		begin = checkInt(0, list->getSize());
+		if (list == nullptr)
+		{
+			std::cout << "There's no graph to perform the operation\n";
+			getchar();
+		}
+		else
+		{
+			std::cout << "Input begin vertex: ";
+			begin = checkInt(0, list->getSize());
 
-		std::cout << "Input end vertex: ";
-		end = checkInt(0, list->getSize());
+			std::cout << "Input end vertex: ";
+			end = checkInt(0, list->getSize());
 
-		NeighboursList::dijkstraAlgorithm(list, begin, end);
+			NeighboursList::dijkstraAlgorithm(list, begin, end);
+		}
 	}
 	break;
 	case '8':
 	{
-		std::cout << "Input begin vertex: ";
-		begin = checkInt(0, matrix->getSize()-2);
+		if (matrix == nullptr)
+		{
+			std::cout << "There's no graph to perform the operation\n";
+			getchar();
+		}
+		else
+		{
+			std::cout << "Input begin vertex: ";
+			begin = checkInt(0, matrix->getSize() - 2);
 
-		std::cout << "Input end vertex: ";
-		end = checkInt(0, matrix->getSize()-2);
+			std::cout << "Input end vertex: ";
+			end = checkInt(0, matrix->getSize() - 2);
 
-		IncidenceMatrix::dijkstraAlgorithm(matrix, begin, end);
+			IncidenceMatrix::dijkstraAlgorithm(matrix, begin, end);
+		}
 	}
 	break;
 	case 'q':

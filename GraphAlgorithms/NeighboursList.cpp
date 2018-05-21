@@ -237,11 +237,12 @@ void NeighboursList::dijkstraAlgorithm(NeighboursList * inGraph, int begin, int 
 		path.push_front(p[v]);
 		v = p[v];
 	}
-
+	std::cout << "\nBegin";
 	for (int e : path)
 	{
-		std::cout << e << " ";
+		std::cout << "->" << e;
 	}
+	std::cout << " The cost of the path: " << d[end];
 	getchar();
 	
 }
