@@ -231,16 +231,19 @@ void NeighboursList::dijkstraAlgorithm(NeighboursList * inGraph, int begin, int 
 	}
 	v = end;
 	path.push_front(end);
+	
 	while (v != begin)
 	{
 		path.push_front(p[v]);
 		v = p[v];
 	}
+
 	for (int e : path)
 	{
 		std::cout << e << " ";
 	}
-
+	getchar();
+	
 }
 
 int NeighboursList::getSize()

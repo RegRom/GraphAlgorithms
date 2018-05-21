@@ -231,10 +231,10 @@ void MainMenu::dijkstraExperiments(char option)
 	case '7':
 	{
 		std::cout << "Input begin vertex: ";
-		begin = checkInt(1, list->getSize());
+		begin = checkInt(0, list->getSize());
 
 		std::cout << "Input end vertex: ";
-		end = checkInt(1, list->getSize());
+		end = checkInt(0, list->getSize());
 
 		NeighboursList::dijkstraAlgorithm(list, begin, end);
 	}
@@ -242,10 +242,10 @@ void MainMenu::dijkstraExperiments(char option)
 	case '8':
 	{
 		std::cout << "Input begin vertex: ";
-		begin = checkInt(1, matrix->getSize()-1);
+		begin = checkInt(0, matrix->getSize()-2);
 
 		std::cout << "Input end vertex: ";
-		end = checkInt(1, matrix->getSize()-1);
+		end = checkInt(0, matrix->getSize()-2);
 
 		IncidenceMatrix::dijkstraAlgorithm(matrix, begin, end);
 	}
@@ -255,4 +255,80 @@ void MainMenu::dijkstraExperiments(char option)
 	default:
 		std::cout << "An unidentified option has been chosen, please input correct parameter to perfom an action!\n";
 	}
+}
+
+void MainMenu::primTimeExperiment(int size, float density)
+{
+	IncidenceMatrix *timeMatrix = new IncidenceMatrix(size, density, false);
+	NeighboursList *timeList = new NeighboursList(size, density, false);
+	NeighboursList *tree1;
+
+	for (size_t i = 0; i < 100; i++)
+	{
+		delete timeMatrix;
+		timeMatrix = new IncidenceMatrix(size, density, false);
+		timeMatrix->randomFillGraph();
+
+		t1 = std::chrono::high_resolution_clock::now();						//Pobieramy warto�� czasu bezpo�rednio przed wykonaniem operacji
+		tree1 = IncidenceMatrix::primAlgorithm(timeMatrix);
+		t2 = std::chrono::high_resolution_clock::now();
+		results[i] = saveCountTime();
+		delete tree1;
+	}
+	calcAverage();
+	saveResultsToFile("primIncidenceMatrix.txt");
+
+	for (size_t i = 0; i < 100; i++)
+	{
+		delete timeList;
+		timeList = new NeighboursList(size, density, false);
+		timeList->randomFillGraph();
+
+		t1 = std::chrono::high_resolution_clock::now();						//Pobieramy warto�� czasu bezpo�rednio przed wykonaniem operacji
+		tree1 = NeighboursList::primAlgorithm(timeList);
+		t2 = std::chrono::high_resolution_clock::now();
+		results[i] = saveCountTime();
+		delete tree1;
+	}
+	calcAverage();
+	saveResultsToFile("primNeighboursList.txt");
+}
+
+void MainMenu::dijkstraTimeExperiments(int size, float density)
+{
+	IncidenceMatrix *timeMatrix = new IncidenceMatrix(size, density, true);
+	NeighboursList *timeList = new NeighboursList(size, density, true);
+	int prev, next;
+
+	for (size_t i = 0; i < 100; i++)
+	{
+		delete timeMatrix;
+		timeMatrix = new IncidenceMatrix(size, density, true);
+		timeMatrix->randomFillGraph();
+		prev = rand() % size;
+		next = rand() % size;
+
+		t1 = std::chrono::high_resolution_clock::now();						//Pobieramy warto�� czasu bezpo�rednio przed wykonaniem operacji
+		IncidenceMatrix::dijkstraAlgorithm(timeMatrix, prev, next);
+		t2 = std::chrono::high_resolution_clock::now();
+		results[i] = saveCountTime();
+	}
+	calcAverage();
+	saveResultsToFile("dijkstraIncidenceMatrix.txt");
+
+	for (size_t i = 0; i < 100; i++)
+	{
+		delete timeList;
+		timeList = new NeighboursList(size, density, true);
+		timeList->randomFillGraph();
+		prev = rand() % size;
+		next = rand() % size;
+
+		t1 = std::chrono::high_resolution_clock::now();						//Pobieramy warto�� czasu bezpo�rednio przed wykonaniem operacji
+		NeighboursList::dijkstraAlgorithm(timeList, prev, next);
+		t2 = std::chrono::high_resolution_clock::now();
+		results[i] = saveCountTime();
+	}
+	calcAverage();
+	saveResultsToFile("dijkstraNeighboursList.txt");
 }

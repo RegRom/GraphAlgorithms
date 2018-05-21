@@ -26,5 +26,7 @@ public:
 	double saveCountTime();
 	void primExperiments(char option);
 	void dijkstraExperiments(char option);
+	void primTimeExperiment(int size, float density);
+	void dijkstraTimeExperiments(int size, float density);
 };
 

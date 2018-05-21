@@ -266,9 +266,6 @@ void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, in
 		vertices.erase(vertices.begin());
 		l = 0;
 		int vertex = tmp.second;
-		//if (vertex == end) break;
-		//if (edgeCount[vertex] == 0) continue;
-		//{
 			std::shared_ptr<Edge> e;
 			for (l = 0; l < tmpVec.size(); l++)
 			{
@@ -276,7 +273,6 @@ void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, in
 				else
 				{
 					e = tmpVec[l];
-					//tmpVec.erase(tmpVec.begin + l - 1);
 					edgeCount[vertex]--;
 
 					int neigh = e->endVertex;
@@ -293,21 +289,23 @@ void IncidenceMatrix::dijkstraAlgorithm(IncidenceMatrix * inGraph, int begin, in
 					}
 				}
 			}
-		//}
-
-	
 	}
 	v = end;
 	path.push_front(end);
+	
 	while (v != begin)
 	{
 		path.push_front(p[v]);
 		v = p[v];
 	}
+	std::cout << "\nBegin";
 	for (int e : path)
 	{
-		std::cout << e << " ";
+		std::cout << "->" << e;
 	}
+	std::cout << " The cost of the path: " << d[end];
+	getchar();
+	
 }
 
 int IncidenceMatrix::getSize()
