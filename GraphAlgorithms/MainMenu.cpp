@@ -174,18 +174,34 @@ void MainMenu::primExperiments(char option)
 	break;
 	case '7':
 	{
-		NeighboursList *tree = NeighboursList::primAlgorithm(list);
-		tree->display();
-		getchar();
-		delete tree;
+		if (list == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			NeighboursList *tree = NeighboursList::primAlgorithm(list);
+			tree->display();
+			getchar();
+			delete tree;
+		}
 	}
 	break;
 	case '8':
 	{
-		NeighboursList *tree = IncidenceMatrix::primAlgorithm(matrix);
-		tree->display();
-		getchar();
-		delete tree;											//Usuwamy drzewo rozpinające
+		if (matrix == nullptr)
+		{
+			std::cout << "There's no graph to display\n";
+			getchar();
+		}
+		else
+		{
+			NeighboursList *tree = IncidenceMatrix::primAlgorithm(matrix);
+			tree->display();
+			getchar();
+			delete tree;											//Usuwamy drzewo rozpinające
+		}
 	}
 	break;
 	case 'q':
